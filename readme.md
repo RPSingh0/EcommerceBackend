@@ -13,7 +13,6 @@ The backend project leverages several technologies to power its functionality:
 5. **Controllers**: The project includes various controllers such as `productController`, `reviewController`, `subCategoryController`, `parentCategoryController`, and `authenticationController`. These controllers handle different aspects of the application logic, such as CRUD operations for products, reviews, subcategories, parent categories, and user authentication.
 
 # User Schema and Endpoints
----
 ### Schema
 The User schema defines the structure for user-related data in the application. Below are the fields and their types:
 
@@ -73,7 +72,6 @@ All endpoints are under `/api/v1/user`.
 | `/getItemDetailsInWishlist`    | GET    | Get details of items in the user's wishlist. | `authenticationController.protect`, `userController.getItemDetailsInWishlist` |
 
 # Product Schema and Endpoints
----
 ### Schema
 The Product schema defines the structure for product-related data in the application. Below are the fields and their types:
 
@@ -105,7 +103,6 @@ All endpoints are under `/api/v1/product`.
 
 
 # Review Schema and Endpoints
----
 ### Schema
 The Review schema defines the structure for review-related data in the application. Below are the fields and their types:
 
@@ -127,7 +124,6 @@ All endpoints are under `/api/v1/review`.
 | `/delete`         | POST   | Delete a review.           | `authenticationController.protect`, `reviewController.deleteReview` |
 
 # SubCategory Schema and Endpoints
----
 ### Schema
 The Sub Category schema defines the structure for subcategory-related data in the application. Below are the fields and their types:
 
@@ -147,7 +143,6 @@ All endpoints are under `/api/v1/subCategory`.
 | `/delete/:category` | DELETE | Delete a subcategory by category. | `subCategoryController.deleteSubCategory` |
 
 # ParentCategory Schema and Endpoints
----
 ### Schema
 The Parent Category schema defines the structure for parent category-related data in the application. Below are the fields and their types:
 
