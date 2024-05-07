@@ -80,8 +80,8 @@ exports.purchaseCart = catchAsync(async (req, res, next) => {
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        success_url: `http://rpsr.in/order/${transactionId}`,
-        cancel_url: 'http://rpsr.in/cart',
+        success_url: `http://ecommerce-production-r.s3-website-us-east-1.amazonaws.com/order/${transactionId}`,
+        cancel_url: 'http://ecommerce-production-r.s3-website-us-east-1.amazonaws.com/cart',
         customer_email: "rpalsingh715@gmail.com",
         client_reference_id: transactionId,
         line_items: line_items_array,
