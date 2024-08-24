@@ -7,14 +7,17 @@ const userRouter = require('./routes/userRoutes');
 const userController = require('./controllers/userController');
 const reviewRouter = require('./routes/reviewRoutes');
 const globalErrorHandler = require('./utils/errorHandler');
+const swaggerUi = require('swagger-ui-express');
+const specs = require("./swaggerInit");
+const morgan = require('morgan');
 
 /**
  * The main entrypoint `app` variable for application
  */
 const app = express();
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(cors());
-
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 app.post('/webhookCheckout', express.raw({type: 'application/json'}), userController.webhookCheckout);
 
 app.use(express.json())

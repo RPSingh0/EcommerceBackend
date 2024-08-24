@@ -2,13 +2,8 @@ const catchAsync = require('../utils/catchAsync');
 const Product = require('../models/productModel');
 
 exports.getAllProduct = catchAsync(async (req, res, next) => {
-    const products = await Product.find()
-        .populate({
-            path: "parentCategory",
-        }).populate({
-            path: "subCategory"
-        }).select('-__v');
-    // const products = await Product.find().select('-parentCategory -subCategory -__v');
+
+    const products = await Product.find().select('-parentCategory -subCategory -__v');
 
     if (products.length === 0) {
         return res.status(204).end();
@@ -106,7 +101,8 @@ exports.getAllProductByParentCategory = catchAsync(async (req, res, next) => {
 });
 
 exports.getProductById = catchAsync(async (req, res, next) => {
-    const product = await Product.findById(req.params.productId);
+    const product = await Product.findById(req.params.productId)
+        .select('-__v');
 
     if (!product) {
         return res.status(204).end();
@@ -146,7 +142,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
         subCategory: subCategory
     });
 
-    const savedProduct = await Product.findById(product._id).select('-_id -__v -createdOn');
+    const savedProduct = await Product.findById(product._id).select('-__v');
 
     return res.status(201).json({
         status: 'success',

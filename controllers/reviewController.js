@@ -26,6 +26,8 @@ exports.createReview = catchAsync(async (req, res, next) => {
         rating: rating
     });
 
+    createdReview.__v = undefined;
+
     res.status(201).json({
         status: 'success',
         data: {
@@ -41,7 +43,7 @@ exports.getReviewByProduct = catchAsync(async (req, res, next) => {
         .populate({
             path: 'user',
             select: 'firstName lastName userImage'
-        });
+        }).select('-__v');
 
     res.status(200).json({
         status: 'success',
