@@ -33,7 +33,7 @@ mongoose.connect(DB, {
 
 if (process.env.NODE_ENV === 'dev') {
     /**
-     * Connection port settings
+     * Connection port
      */
     const port = process.env.PORT || 3000;
 
