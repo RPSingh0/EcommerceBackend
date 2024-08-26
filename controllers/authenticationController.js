@@ -10,8 +10,16 @@ const signToken = function (id) {
     });
 }
 
+const setUserData = function (user) {
+    user.password = undefined;
+    user.passwordChangedAt = undefined;
+    user.__v = undefined;
+}
+
 const createAndSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
+
+    setUserData(user);
 
     res.status(statusCode).json({
         status: 'success',

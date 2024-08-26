@@ -80,8 +80,8 @@ exports.purchaseCart = catchAsync(async (req, res, next) => {
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        success_url: `http://ecommerce-production-r.s3-website-us-east-1.amazonaws.com/order/${transactionId}`,
-        cancel_url: 'http://ecommerce-production-r.s3-website-us-east-1.amazonaws.com/cart',
+        success_url: `${process.env.STRIPE_SUCCESS_URL}/${transactionId}`,
+        cancel_url: `${process.env.STRIPE_CANCEL_URL}`,
         customer_email: "rpalsingh715@gmail.com",
         client_reference_id: transactionId,
         line_items: line_items_array,
@@ -175,65 +175,6 @@ exports.getOrderByOrderId = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllOrders = catchAsync(async (req, res, next) => {
-    const {_id} = req.user;
-
-    const orderDetails = await User.aggregate([
-        {
-            $match: {
-                _id: _id
-            }
-        },
-        {
-            $unwind: '$previousOrders'
-        },
-        {
-            $addFields: {
-                identifierObjectId: {
-                    $toObjectId: "$previousOrders.identifier"
-                }
-            }
-        },
-        {
-            $lookup: {
-                from: 'product',
-                localField: 'identifierObjectId',
-                foreignField: '_id',
-                as: 'productDetails'
-            }
-        },
-        {$unwind: '$productDetails'},
-        {
-            $group: {
-                _id: '$previousOrders.transactionId',
-                totalPurchase: {
-                    $sum: {$multiply: ['$previousOrders.quantity', '$productDetails.price']}
-                },
-                totalQuantity: {$sum: '$previousOrders.quantity'},
-                purchasedOn: {
-                    $max: '$previousOrders.purchasedOn'
-                }
-            }
-        },
-        {
-            $project: {
-                transactionId: '$_id',
-                totalPurchase: 1,
-                totalQuantity: 1,
-                purchasedOn: 1,
-                _id: 0
-            }
-        }
-    ]);
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            orderDetails: orderDetails
-        }
-    });
-});
-
-exports.getAllOrdersForReview = catchAsync(async (req, res, next) => {
     const {_id} = req.user;
 
     const orderDetails = await User.aggregate([

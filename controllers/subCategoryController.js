@@ -13,7 +13,8 @@ exports.getAllSubCategory = catchAsync(async (req, res, next) => {
         return res.status(204).end();
     } else {
         res.status(200).json({
-            status: 'success', data: {
+            status: 'success',
+            data: {
                 subCategories: subCategories
             }
         });
@@ -38,7 +39,8 @@ exports.createSubCategory = catchAsync(async (req, res, next) => {
     // .select('-_id -__v -createdOn');
 
     return res.status(201).json({
-        status: 'success', data: {
+        status: 'success',
+        data: {
             subCategory: savedSubCategory
         }
     });
