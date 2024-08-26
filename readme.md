@@ -1,5 +1,7 @@
 # Technologies Used
 
+Swagger URL: [here](https://h8v5m2nbmi.execute-api.us-east-1.amazonaws.com/prodv1/api-docs)
+
 The backend project leverages several technologies to power its functionality:
 
 1. **Node.js**: The project is built on Node.js, a JavaScript runtime that allows server-side execution of JavaScript code.
