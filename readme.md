@@ -189,3 +189,40 @@ The backend project leverages several technologies to power its functionality:
 * Once saved, click on `Deploy API`, and add stage name (optional)
 * And, That's it... you'll have you're api gateway url
 * Try going to <api-gateway-url>/api-docs to see the swagger ui 🥳 | *We used /api-docs as swagger ui endpoint, please replace it with your endpoint if used different*
+
+### Some quick fixes
+
+* In case you're facing some errors like (`Runtime.ImportModuleError`) below, this is likely because of incorrect handler configuration.
+    ```json
+    {
+        "errorType": "Runtime.ImportModuleError",
+        "errorMessage": "Error: Cannot find module 'index'\nRequire stack:\n- /var/runtime/index.mjs",
+        "stack": [
+            "Runtime.ImportModuleError: Error: Cannot find module 'index'",
+            "Require stack:",
+            "- /var/runtime/index.mjs",
+            "    at _loadUserApp (file:///var/runtime/index.mjs:1087:17)",
+            "    at async UserFunction.js.module.exports.load (file:///var/runtime/index.mjs:1119:21)",
+            "    at async start (file:///var/runtime/index.mjs:1282:23)",
+            "    at async file:///var/runtime/index.mjs:1288:1"
+        ]
+    }
+    ```
+  * Let's make sure we've got correct handler configured
+  * Head to lambda -> Code tab -> Runtime Setting and click on `Edit`
+  * Under the field, mention correct name, in our case our base file is called `server.js` so we defined `server.handler`. Please configure according to your base file
+
+* In case you're trying to access this api from a frontend application and getting `CORS` error, this is likely because of unconfigured / mis-configured CORS properties
+  * In our case, we enabled cors while creating resource in api gateway, if you forgot to do that, please follow [this](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors-console.html) documentation
+  * If `CORS` in enabled, and still getting a `CORS` error, check nodejs application and make sure to use `cors` package like below
+    * Install package
+        ```bash
+        npm install cors
+        ```
+    * Use cors middleware
+      ```js
+      const cors = require('cors');
+        
+      app.use(cors()); // Optionally add cors options
+      ```
+    * Get CORS option documentation [here](https://expressjs.com/en/resources/middleware/cors.html)
