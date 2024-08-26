@@ -21,7 +21,9 @@ The backend project leverages several technologies to power its functionality:
    and `authenticationController`. These controllers handle different aspects of the application logic, such as CRUD
    operations for products, reviews, subcategories, parent categories, and user authentication.
 
-### How to prepare this for serverless lambda and api gateway and add swagger-ui support
+6. **AWS**: For hosting our backend
+
+### How to prepare this for serverless lambda, api gateway and add swagger-ui support
 
 * Install `serverless-http` with following command
 
